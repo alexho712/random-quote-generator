@@ -25,15 +25,19 @@ def request_quote():
         with open("quote_request.txt", "w") as quote_request:
             quote_request.write(request)
         time.sleep(1)
-        with open("quote_sent.txt", "r+") as quote_returned:
-            generated_quote = quote_returned.read()
-            if len(generated_quote) == 0:
-                generated_quote = "No quote was generated since the microservice is currently down."
-            quote_returned.seek(0)
-            quote_returned.truncate()
-        set_quote(generated_quote)
+        receive_quote()
     else:
         tkinter.messagebox.showwarning(title= "Error", message="You have not selected a quote option. \nAn option and, sometimes, an additional selection are required to generate a quote.")
+
+def receive_quote():
+    """Reads the quote_sent.txt file for the quote that was sent by the microservice after a request is made."""
+    with open("quote_sent.txt", "r+") as quote_returned:
+        generated_quote = quote_returned.read()
+        if len(generated_quote) == 0:
+            generated_quote = "No quote was generated since the microservice is currently down."
+        quote_returned.seek(0)
+        quote_returned.truncate()
+        set_quote(generated_quote)
 
 def show_intro():
     """Displays introduction to Pull-A-Quote! when button is clicked."""
