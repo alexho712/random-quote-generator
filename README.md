@@ -1,35 +1,45 @@
-# CS361 
-# Communication Contract
-# Clear instructions for how to programmatically REQUEST data from the microservice you implemented. Include an example call.
+# Pull-A-Quote! - A Random Quote Generator
 
-To send a request to the microservice in order to save a back up of the set of notes currently available, my partner's 
-application will have to make an HTTP POST request to this address 'http://localhost:5001/backup' using 'requests.post' method
-which will have to be imported and send the notes to be saved in dictionary format which the microservice will receive in the
-JSON format and then attempt to save the notes to a file on the desktop. 
+This project is a tkinter based desktop application that can be run by running both python files concurrently in different instances
+to generate a random quote based on the user preferences as long as they are in the same directory with the sample quote collection 
+database provided. This project was completed throughout CS361 - Software Engineering I to not only develop and use a microservice but
+also to simulate the process for software development in the real-world following the Agile Scrum framework
+
+# Instructions for how to programmatically REQUEST data from the microservice you implemented. 
+
+Create a text file called "quote_request.txt", the microservice reads requests from this file while it is running. 
+To request a quote, write a line in this file. The format depends on the type of quote you're requesting: 
+For a specific topic: Write "Topic [Your_Topic]" in the quote_request.txt file. Replace [Your_Topic] with one of the topics from the list. 
+For a specific medium: Write "Medium [Your_Medium]" in the quote_request.txt file. Replace [Your_Medium] with the desired medium. 
+For a random quote: Write "Random" into the text file.
+The microservice will validate the request to make sure that it is a valid request. 
 
 Example Call: 
-Given a sample set of notes that already exist in partner's application as a dictionary (it will get converted to JSON format
-in the POST request):
-  self.notes = {"Note 1": "This is note 1", "Note 2": "This is note 2"}
-Have a button on the application that will trigger this command when pressed/clicked:
-  response = requests.post('http://localhost:5001/backup', json=self.notes)
+From the shell/terminal in the same directory as the microservice, this is a command you could use to make a request:
+echo "Medium Book" > quote_request.txt
+
+In my case, my random quote generator will write to the quote_request.txt file after the user selects their preferences
+and clicks the "Generate Quote" button without an error popping up.   
 
 # Clear instructions for how to programmatically RECEIVE data from the microservice you implemented.
 
-To receive the data from the microservice, it first requires the REQUEST to be completed successfully so that there is a file
-on the desktop containing a saved set of notes. My partner's application will then have to make an HTTP GET request to the 
-address 'http://localhost:5001/restore' using the 'requests.get' imported method which the microservice will listen for. 
-Once the GET request is received by the microservice, the backup file will be returned as a JSON object containing the notes
-that my partner's application will have to receive using ".json()" to convert the JSON data into a dictionary that can then
-be used as the set of notes in the application. 
+After a successful request, a quote will be randomly pulled from the database and written to a text file called "quote_sent.txt"
+and the data can then be received by opening the file and reading it.
 
 Example Call:
-Have a button on the application that will trigger this command when pressed/clicked:
-  response = requests.get('http://localhost:5001/restore')
-If the notes in the application are stored as "self.notes" similar to the example above, this command will turn the JSON object into 
-a dictionary that will be in the same form as the initial dictionary form when the request was made above:
-  self.notes = response.json()
-  
-# UML sequence diagram showing how requesting and receiving data works. Make it detailed enough that your partner (and your grader) will understand
+Command to print contents to the terminal: 
+cat quote_sent.txt 
 
-![UML sequence diagram showing REQUEST/RECEIVE](./uml.png)
+In my case, my random quote generator will only read from the quote_sent.txt file after a valid quote generation request and then
+print that to the output area.
+
+## Picture of the Application
+
+![Example Usage](images/desktopapp.png)
+
+# UML sequence diagram showing how requesting and receiving data works. 
+
+![UML sequence diagram showing REQUEST/RECEIVE](images/uml.png)
+
+# Technologies Used
+Python
